@@ -9,6 +9,9 @@
 
 <body>
 
+    @include('partials.switcher')
+    @include('partials.loader')
+
     <div class="page">
 
         @include('partials.navbar')
@@ -24,6 +27,7 @@
 
     </div>
 
+    @include('partials.scroll-to-top')
     @include('partials.scripts')
 
 </body>

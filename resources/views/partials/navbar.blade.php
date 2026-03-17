@@ -41,6 +41,21 @@
         <div class="header-content-right">
 
             <!-- Start::header-element -->
+            <div class="header-element header-theme-mode">
+                <!-- Start::header-link|layout-setting -->
+                <a aria-label="anchor" href="javascript:void(0);" class="header-link layout-setting">
+                    <!-- Start::header-link-icon -->
+                    <i class="bx bx-sun bx-flip-horizontal header-link-icon ionicon  dark-layout"></i>
+                    <!-- End::header-link-icon -->
+                    <!--  Start::header-link-icon -->
+                    <i class="bx bx-moon bx-flip-horizontal header-link-icon ionicon light-layout"></i>
+                    <!-- End::header-link-icon -->
+                </a>
+                <!-- End::header-link|layout-setting -->
+            </div>
+            <!-- End::header-element -->
+
+            <!-- Start::header-element -->
             <div class="header-element mainuserProfile">
                 <!-- Start::header-link|dropdown-toggle -->
                 <a href="javascript:void(0);" class="header-link dropdown-toggle" id="mainHeaderProfile" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
@@ -61,6 +76,16 @@
                         <a class="dropdown-item" href="#"><i class="fs-13 me-2 bx bx-arrow-to-right"></i>Log Out</a>
                     </li>
                 </ul>
+            </div>
+            <!-- End::header-element -->
+
+            <!-- Start::header-element -->
+            <div class="header-element">
+                <!-- Start::header-link|switcher-icon -->
+                <a aria-label="anchor" href="javascript:void(0);" class="header-link switcher-icon ms-1" data-bs-toggle="offcanvas" data-bs-target="#switcher-canvas">
+                    <i class="bx bx-cog bx-spin header-link-icon"></i>
+                </a>
+                <!-- End::header-link|switcher-icon -->
             </div>
             <!-- End::header-element -->
 

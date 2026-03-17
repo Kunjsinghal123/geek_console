@@ -17,3 +17,23 @@
 
 <!-- STYLES CSS -->
 <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet">
+
+<!-- MAIN JS -->
+<script src="{{ asset('assets/js/main.js') }}"></script>
+
+<!-- NODE WAVES CSS -->
+<link href="{{ asset('assets/libs/node-waves/waves.min.css') }}" rel="stylesheet"> 
+
+<!-- SIMPLEBAR CSS -->
+<link rel="stylesheet" href="{{ asset('assets/libs/simplebar/simplebar.min.css') }}">
+
+<!-- COLOR PICKER CSS -->
+<link rel="stylesheet" href="{{ asset('assets/libs/flatpickr/flatpickr.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/libs/%40simonwep/pickr/themes/nano.min.css') }}">
+
+<!-- CHOICES CSS -->
+<link rel="stylesheet" href="{{ asset('assets/libs/choices.js/public/assets/styles/choices.min.css') }}">
+
+<!-- CHOICES JS -->
+<script src="{{ asset('assets/libs/choices.js/public/assets/scripts/choices.min.js') }}"></script>
+        
