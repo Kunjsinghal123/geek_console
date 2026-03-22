@@ -207,10 +207,73 @@ class InstallController extends Controller
             ]
         );
 
+        // Register uninstall webhook
+        Http::withHeaders([
+            'X-Shopify-Access-Token' => $accessToken
+        ])->post("https://{$shop}/admin/api/2026-01/webhooks.json", [
+            'webhook' => [
+                'topic' => 'app/uninstalled',
+                'address' => route('uninstall'),
+                'format' => 'json'
+            ]
+        ]);
+
         // Redirect to setup-wizard
         return redirect()->route('setup-wizard', [
             'store_id' => $shopInfo['id'],
             'step' => 1
         ])->with('success', 'App installed successfully. Please complete the setup');
+    }
+
+    public function unInstall(Request $request)
+    {
+        // Get raw body
+        $data = file_get_contents('php://input');
+
+        $hmacHeader = $request->header('X-Shopify-Hmac-Sha256');
+
+        $clientSecret = config('shopify.client_secret');
+
+        // Verify webhook
+        $calculatedHmac = base64_encode(
+            hash_hmac('sha256', $data, $clientSecret, true)
+        );
+
+        if (!hash_equals($hmacHeader, $calculatedHmac)) {
+            return response()->json([
+                'status' => 'error',
+                'error' => [
+                    'code' => 'INVALID_HMAC',
+                    'message' => 'Webhook signature verification failed.'
+                ]
+            ], 401);
+        }
+
+        // Decode payload
+        $payload = json_decode($data, true);
+
+        $storeId = $payload['id'] ?? null;
+
+        if (!$storeId) {
+            return response()->json([
+                'status' => 'error',
+                'error' => [
+                    'code' => 'MISSING_STORE_ID',
+                    'message' => 'Store ID not found in webhook payload.'
+                ]
+            ], 400);
+        }
+
+        // Update status
+        Store::where('store_id', $storeId)->update([
+            'is_active' => false,
+            'access_token' => 'app_uninstalled',
+            'uninstalled_at' => now(),
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Webhook processed successfully.'
+        ], 200);
     }
 }
