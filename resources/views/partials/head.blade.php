@@ -3,6 +3,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+<!-- MANUALLY ADDED META TAG FOR GOOGLE SEARCH CONSOLE VERIFICATION FOR TESTING -->
+<meta name="google-site-verification" content="gsWGmKrIlHUtbX09EYE1TDYEgQy__YlXLrUyEknfgdA" />
+
 <!-- TITLE -->
 <title> @yield('title', 'Geek Search Console') </title>
 
