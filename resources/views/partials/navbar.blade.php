@@ -60,20 +60,38 @@
                 <!-- Start::header-link|dropdown-toggle -->
                 <a href="javascript:void(0);" class="header-link dropdown-toggle" id="mainHeaderProfile" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                     <div class="d-flex align-items-center">
-                        <div class="d-sm-flex wd-100p">
-                            <div class="avatar avatar-sm">
-                                <img alt="avatar" class="rounded-circle" src="">
+                        @if(auth()->check())
+                            <div class="d-sm-flex wd-100p">
+                                @if(auth()->user()->store_logo)
+                                    <div class="avatar avatar-sm">
+                                        <img alt="avatar" class="rounded-circle" src="{{ auth()->user()->store_logo }}">
+                                    </div>
+                                @else 
+                                    <div>
+                                        <span class="avatar avatar-rounded avatar-sm bg-info">
+                                            {{ auth()->user()->initials }}
+                                        </span>
+                                    </div>
+                                @endif
+
+                                @if(auth()->user()->store_name)
+                                    <div class="ms-2 my-auto d-none d-xl-flex">
+                                        <h6 class=" font-weight-semibold mb-0 fs-13 user-name d-sm-block d-none">{{ auth()->user()->store_name }}</h6>
+                                    </div>  
+                                @endif
                             </div>
-                            <div class="ms-2 my-auto d-none d-xl-flex">
-                                <h6 class=" font-weight-semibold mb-0 fs-13 user-name d-sm-block d-none">Rahul Roy</h6>
-                            </div>
-                        </div>
+                        @endif
                     </div>
                 </a>
                 <!-- End::header-link|dropdown-toggle -->
                 <ul class="dropdown-menu  border-0 main-header-dropdown  overflow-hidden header-profile-dropdown" aria-labelledby="mainHeaderProfile">
                     <li>
-                        <a class="dropdown-item" href="#"><i class="fs-13 me-2 bx bx-arrow-to-right"></i>Log Out</a>
+                        <form method="POST" action="{{ route('sign.out') }}">
+                            @csrf
+                            <button type="submit" class="dropdown-item">
+                                <i class="fs-13 me-2 bx bx-arrow-to-right"></i>Sign Out
+                            </button>
+                        </form>
                     </li>
                 </ul>
             </div>

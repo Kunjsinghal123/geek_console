@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('store_domain')->unique();
             $table->string('store_name')->nullable();
             $table->string('store_email')->nullable();
+            $table->string('store_logo')->nullable();
             $table->string('owner_name')->nullable();
             $table->text('access_token');
             $table->text('scope')->nullable();

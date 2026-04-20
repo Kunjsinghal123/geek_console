@@ -191,6 +191,39 @@ class InstallController extends Controller
             ], 500);
         }
 
+        // Get theme details
+        $themes = Http::withHeaders([
+            'X-Shopify-Access-Token' => $accessToken
+        ])->get("https://{$shop}/admin/api/2026-01/themes.json");
+
+        // Get main theme
+        $mainTheme = collect($themes->json('themes'))->firstWhere('role', 'main');
+
+        // Get theme settings
+        $themeSettings = Http::withHeaders([
+            'X-Shopify-Access-Token' => $accessToken
+        ])->get("https://{$shop}/admin/api/2026-01/themes/{$mainTheme['id']}/assets.json", [
+            'asset[key]' => 'config/settings_data.json'
+        ]);
+
+        $themeSettingsData = json_decode($themeSettings->json('asset.value'), true);
+
+        // Extract logo from theme settings
+        $storeLogo = $themeSettingsData['current']['logo'] ?? $themeSettingsData['current']['logo_image'] ?? null;
+
+        // Convert to full URL
+        $logoUrl = null;
+
+        if ($storeLogo && str_contains($storeLogo, 'shopify://')) {
+            $pathParts = explode('/', $storeLogo);
+            $fileName = end($pathParts);
+
+            $logoUrl = "https://{$shop}/cdn/shop/files/{$fileName}";
+        }
+
+        // Fallback to Shopify shop logo
+        $logoUrl = $logoUrl ?? ($shopInfo['logo'] ?? null);
+
         // Save store details
         Store::updateOrCreate(
             ['store_id' => $shopInfo['id']],
@@ -198,6 +231,7 @@ class InstallController extends Controller
                 'store_domain' => $shop,
                 'store_name' => $shopInfo['name'] ?? null,
                 'store_email' => $shopInfo['email'] ?? null,
+                'store_logo' => $logoUrl,
                 'owner_name' => $shopInfo['shop_owner'] ?? null,
                 'access_token' => $accessToken,
                 'scope' => $scope,
