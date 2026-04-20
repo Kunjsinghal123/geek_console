@@ -8,8 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
 // App Installation Routes
 Route::get('/install', [InstallController::class, 'install']);
 Route::get('/callback', [InstallController::class, 'callback'])->name('callback');
+
+Route::middleware(['web', 'auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
