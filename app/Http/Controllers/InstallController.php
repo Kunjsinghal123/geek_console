@@ -14,7 +14,10 @@ class InstallController extends Controller
 
         $clientId = config('shopify.client_id');
         $scope = config('shopify.scopes');
-        $redirectUri = route('callback');
+        // $redirectUri = route('callback');
+
+        // It is only for vercel testing. It will reomove after hosting on server.
+        $redirectUri = "https://gsc.geekaviator.com/callback";
 
         $state = bin2hex(random_bytes(16));
 
