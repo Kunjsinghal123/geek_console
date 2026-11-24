@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+// class Store extends Model
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Store extends Authenticatable
@@ -20,6 +21,11 @@ class Store extends Authenticatable
         'installed_at',
         'uninstalled_at',
     ];
+
+    // public function googleAccount()
+    // {
+    //     return $this->hasOne(GoogleAccount::class);
+    // }
 
     public function getInitialsAttribute()
     {

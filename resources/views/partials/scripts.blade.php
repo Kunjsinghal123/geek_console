@@ -35,3 +35,24 @@
 
 <!-- CUSTOM-SWITCHER JS -->
 <script src="{{ asset('assets/js/custom-switcher.js') }}"></script>
+
+<script scr="{{ asset('assets/js/analytics-dashboard.js') }}"></script>
+
+
+        
+        <!-- JSVECTOR MAPS JS -->
+        <script src="{{ asset('assets/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
+        <script src="{{ asset('assets/libs/jsvectormap/maps/world-merc.js') }}"></script>
+
+        <!-- CHARTJS CHART JS -->
+        <script src="{{ asset('assets/libs/chart.js/chart.min.js') }}"></script>
+
+        <!-- CRM-DASHBOARD JS -->
+        <script src="{{ asset('assets/js/sales-dashboard.js') }}"></script>
+
+
+        <!-- Ecommerce-Dashboard JS -->
+        <script src="{{ asset('assets/js/ecommerce-dashboard.js') }}"></script>
+
+
+

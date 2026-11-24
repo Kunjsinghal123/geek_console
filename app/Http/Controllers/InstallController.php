@@ -14,10 +14,10 @@ class InstallController extends Controller
 
         $clientId = config('shopify.client_id');
         $scope = config('shopify.scopes');
-        // $redirectUri = route('callback');
+        $redirectUri = route('callback');
 
         // It is only for vercel testing. It will reomove after hosting on server.
-        $redirectUri = "https://gsc.geekaviator.com/callback";
+        // $redirectUri = "https://gsc.geekaviator.com/callback";
 
         $state = bin2hex(random_bytes(16));
 
@@ -312,5 +312,45 @@ class InstallController extends Controller
             'status' => 'success',
             'message' => 'Webhook processed successfully.'
         ], 200);
+    }
+
+    public function dashboard(Request $request)
+    {
+        $shop = $request->get('shop');
+
+        if (!$shop) {
+            return response('Missing shop', 400);
+        }
+
+        $store = Store::where('store_domain', $shop)->first();
+
+        // ❌ Not installed or inactive
+        if (!$store || !$store->is_active) {
+            return redirect('/install?shop=' . $shop);
+        }
+
+        return "Welcome to Dashboard for {$shop}";
+    }
+
+    public function testing()
+    {
+        echo 'route ===> ' . route('uninstall');
+
+        $clientId = config('shopify.client_id');
+        $scope = config('shopify.scopes');
+        $redirectUri = route('callback');
+
+        // https://{shop}/admin/oauth/authorize?client_id={client_id}&scope={scopes}&redirect_uri={redirect_uri}&state={nonce}&grant_options[]={access_mode}
+
+        // Generate state
+        $state = bin2hex(random_bytes(16));
+
+        dump('client Id==>' . $clientId, 'Scopes ===>' . $scope, 'riderect url==>' . $redirectUri, 'State==>' . $state);
+        $shop = 'geek-search-store.myshopify.com';
+        $token = 'shpua_c724603e7e61dc8d79a6fd7bbca98ee9';
+
+        dd(Http::withHeaders([
+            'X-Shopify-Access-Token' => $token
+        ])->get("https://{$shop}/admin/api/2026-01/webhooks.json")->json());
     }
 }
